@@ -33,7 +33,7 @@ export class SearchBar extends Component {
         <SearchHeader>
           <SearchForm onSubmit={this.handleSubmit}>
             <SearchButton type="submit">
-              <BiSearch />
+              <BiSearch size="2em"/>
             </SearchButton>
   
             <SearchInput

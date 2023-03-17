@@ -17,6 +17,8 @@ padding: 0;
 list-style: none;
 margin-left: auto;
 margin-right: auto;
+margin-top: 16px;
+margin-bottom: 16px;
 `;
 
 export const Request = styled.div`
