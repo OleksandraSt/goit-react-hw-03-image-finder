@@ -22,18 +22,19 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
+    if (prevState.query !== this.state.query ||
+          prevState.page !== this.state.page) {
       this.setState({ isLoading: true, error: null });
       console.log('new request');
       pixabayApi
         .fetchImages(this.state.query, this.state.page)
-        .then(images =>
-          this.setState({
-            images: images.hits,
-            total: images.total,
-            status: 'resolved',
-          })
-        )
+        .then(images => {
+          this.setState(prevState => ({
+            images: [...prevState.images, ...images.hits],
+              total: images.total,
+              status: 'resolved',
+          }));
+        })
         .catch(error => this.setState({ error }))
         .finally(() => this.setState({ isLoading: false }));
     }
@@ -43,16 +44,6 @@ export class App extends Component {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
-    pixabayApi
-      .fetchImages(this.state.query, this.state.page)
-
-      .then(data => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-        }));
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => this.setState({ isLoading: false }));
   };
 
   render() {
