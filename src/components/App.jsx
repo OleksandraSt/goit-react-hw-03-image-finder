@@ -47,7 +47,8 @@ export class App extends Component {
   };
 
   render() {
-    const { isLoading, query, images, error, status, total } = this.state;
+    const { isLoading, query, images, error, status, total, page } = this.state;
+    const totalPages = Math.ceil(total / 12);
     return (
       <>
         <SearchBar onSubmit={this.handleFormSubmit} />
@@ -58,7 +59,7 @@ export class App extends Component {
         {status === 'resolved' && total === 0 && (
           <ErrorMessage>Nothing Found</ErrorMessage>
         )}
-        {images.length >= 12 && <Button onClick={this.loadMore} />}
+        {images.length > 0 && page < totalPages && <Button onClick={this.loadMore} />}
       </>
     );
   }
